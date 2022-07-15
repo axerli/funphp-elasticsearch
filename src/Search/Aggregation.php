@@ -6,7 +6,7 @@ namespace Funphp\Elasticsearch\Search;
 
 use Closure;
 use Funphp\Elasticsearch\Common\Builder\AbstractBuilder;
-use Str;
+use Illuminate\Support\Str;
 
 /**
  * @method Aggregation valueCount(string $name, string $field)
@@ -65,7 +65,7 @@ class Aggregation extends AbstractBuilder
      */
     protected function addAggregation(string $type, string $name, string $field): Aggregation
     {
-        $name = Str::snake($name);
+        $type = Str::snake($type);
 
         $this->aggregation[$name] = [
             $type => [
