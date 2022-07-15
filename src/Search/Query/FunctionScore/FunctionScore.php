@@ -7,6 +7,8 @@ namespace Funphp\Elasticsearch\Search\Query\FunctionScore;
 use Closure;
 use Funphp\Elasticsearch\Common\Builder\AbstractBuilder;
 use Funphp\Elasticsearch\Search\Query\Group\Query;
+use Funphp\Elasticsearch\Search\Script\Script;
+use Illuminate\Support\Collection;
 
 class FunctionScore extends AbstractBuilder
 {
@@ -17,6 +19,10 @@ class FunctionScore extends AbstractBuilder
     private string $scoreMode = 'multiply';
 
     private array $formattedFunctions = [];
+
+    private ?Functions $functions = null;
+
+    private ?Script $scriptScore = null;
 
     public function __construct(Closure $closure)
     {
@@ -31,6 +37,13 @@ class FunctionScore extends AbstractBuilder
     public function query(Closure $query): FunctionScore
     {
         $this->apiBuilders[] = new Query($query);
+
+        return $this;
+    }
+
+    public function scriptScore(Script $script): FunctionScore
+    {
+        $this->scriptScore = $script;
 
         return $this;
     }
@@ -56,7 +69,7 @@ class FunctionScore extends AbstractBuilder
      */
     public function functions(Closure $functions): FunctionScore
     {
-        $this->apiBuilders[] = new Functions($functions);
+        $this->functions = new Functions($functions);
 
         return $this;
     }
@@ -75,10 +88,33 @@ class FunctionScore extends AbstractBuilder
 
     public function queryDsl()
     {
-        return array_merge([
+        return collect([
             'boost_mode' => $this->boostMode,
             'score_mode' => $this->scoreMode,
-            'functions'  => $this->formattedFunctions,
-        ], $this->formatBuilders());
+        ])
+            ->when($this->scriptScore,
+                fn(Collection $collect) => $collect->put('script_score', $this->scriptScore->format())
+            )->merge($this->formatBuilders())
+            ->merge($this->functionsFormat())
+            ->toArray();
+    }
+
+    /**
+     * @return array[]
+     */
+    private function functionsFormat(): array
+    {
+        $functions = $this->formattedFunctions;
+        if ($this->functions) {
+            $functions[] = $this->functions->queryDsl();
+        }
+
+        if (empty($functions)) {
+            return [];
+        }
+
+        return [
+            'functions' => $functions
+        ];
     }
 }
