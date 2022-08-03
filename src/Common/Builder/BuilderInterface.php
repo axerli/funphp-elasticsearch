@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Funphp\Elasticsearch\Common\Builder;
 
-use Funphp\Elasticsearch\Document\Builders\Builder;
+use Illuminate\Contracts\Support\Arrayable;
 
 interface BuilderInterface
 {
@@ -14,12 +14,12 @@ interface BuilderInterface
     public function format(): array;
 
     /**
-     * @return mixed
+     * @return mixed|array|Arrayable
      */
     public function queryDsl();
 
     /**
-     * @return Builder[]
+     * @return BuilderInterface[]
      */
     public function getApiBuilders(): array;
 }

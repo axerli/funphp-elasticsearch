@@ -5,7 +5,7 @@ declare(strict_types = 1);
 return [
     'elasticsearch' => [
         'hosts' => value(function () {
-            $settings = env('ELASTICSEARCH_HOSTS');
+            $settings = (string) env('ELASTICSEARCH_HOSTS');
             $hosts    = array_filter(explode(';', $settings));
             return $hosts ? array_map(function ($url) {
                 return array_merge(parse_url($url), [

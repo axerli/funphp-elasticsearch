@@ -4,6 +4,8 @@ declare(strict_types = 1);
 
 namespace Funphp\Elasticsearch\Common\Builder;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 abstract class AbstractBuilder implements BuilderInterface
 {
     use ApiBuilderCallableTrait;
@@ -42,8 +44,10 @@ abstract class AbstractBuilder implements BuilderInterface
 
     public function format(): array
     {
+        $queryDsl = $this->queryDsl();
+
         return [
-            $this->apiName => $this->queryDsl(),
+            $this->apiName => $queryDsl instanceof Arrayable ? $queryDsl->toArray() : $queryDsl,
         ];
     }
 }
