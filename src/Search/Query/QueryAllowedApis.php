@@ -2,24 +2,13 @@
 
 declare(strict_types = 1);
 
-namespace Funphp\Elasticsearch\Search\Query\Group;
+namespace Funphp\Elasticsearch\Search\Query;
 
 use Closure;
 use Funphp\Elasticsearch\Common\Builder\ApiAllowedCheckTrait;
-use Funphp\Elasticsearch\Search\Query\BoolQuery;
-use Funphp\Elasticsearch\Search\Query\Exists;
 use Funphp\Elasticsearch\Search\Query\FunctionScore\FunctionScore;
-use Funphp\Elasticsearch\Search\Query\Ids;
 use Funphp\Elasticsearch\Search\Query\Joiner\HasChild;
 use Funphp\Elasticsearch\Search\Query\Joiner\HasParent;
-use Funphp\Elasticsearch\Search\Query\MatchQuery;
-use Funphp\Elasticsearch\Search\Query\MatchAll;
-use Funphp\Elasticsearch\Search\Query\Nested;
-use Funphp\Elasticsearch\Search\Query\Range;
-use Funphp\Elasticsearch\Search\Query\Term;
-use Funphp\Elasticsearch\Search\Query\TermKeyword;
-use Funphp\Elasticsearch\Search\Query\Terms;
-use Funphp\Elasticsearch\Search\Query\Wildcard;
 
 trait QueryAllowedApis
 {
@@ -40,6 +29,7 @@ trait QueryAllowedApis
         'hasChild'      => HasChild::class,
         'functionScore' => FunctionScore::class,
         'nested'        => Nested::class,
+        'multiMatch'    => MultiMatch::class,
     ];
 
     public function __construct(Closure $closure)
