@@ -14,7 +14,6 @@ use Illuminate\Support\Str;
  * @method Aggregation max(string $name, string $field)
  * @method Aggregation min(string $name, string $field)
  * @method Aggregation sum(string $name, string $field)
- * @method Aggregation aggs(Closure $closure)
  */
 class Aggregation extends AbstractBuilder
 {
@@ -63,7 +62,7 @@ class Aggregation extends AbstractBuilder
      * @param string $field
      * @return $this
      */
-    protected function addAggregation(string $type, string $name, string $field): Aggregation
+    public function addAggregation(string $type, string $name, string $field): Aggregation
     {
         $type = Str::snake($type);
 
@@ -73,6 +72,16 @@ class Aggregation extends AbstractBuilder
             ],
         ];
 
+        return $this;
+    }
+
+    /**
+     * @param array $aggs
+     * @return $this
+     */
+    public function aggs(array $aggs): Aggregation
+    {
+        $this->aggregation = $aggs;
         return $this;
     }
 
