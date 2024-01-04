@@ -13,6 +13,8 @@ use Funphp\Elasticsearch\Common\Builder\AbstractBuilder;
  * @method Query terms(string $field, array $values)
  * @method Query matchAll()
  * @method Query match(string $field, string $value)
+ * @method Query matchPhrase(string $field, Closure $closure)
+ * @method Query matchPhrasePrefix(string $field, Closure $closure)
  * @method Query wildcard(string $field, string $value)
  * @method Query exists(string $field)
  * @method Query ids(array $values)

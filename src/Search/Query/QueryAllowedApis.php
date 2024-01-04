@@ -15,21 +15,23 @@ trait QueryAllowedApis
     use ApiAllowedCheckTrait;
 
     protected array $allowedApis = [
-        'term'          => Term::class,
-        'termKeyword'   => TermKeyword::class,
-        'terms'         => Terms::class,
-        'matchAll'      => MatchAll::class,
-        'match'         => MatchQuery::class,
-        'wildcard'      => Wildcard::class,
-        'exists'        => Exists::class,
-        'ids'           => Ids::class,
-        'range'         => Range::class,
-        'bool'          => BoolQuery::class,
-        'hasParent'     => HasParent::class,
-        'hasChild'      => HasChild::class,
-        'functionScore' => FunctionScore::class,
-        'nested'        => Nested::class,
-        'multiMatch'    => MultiMatch::class,
+        'term'              => Term::class,
+        'termKeyword'       => TermKeyword::class,
+        'terms'             => Terms::class,
+        'matchAll'          => MatchAll::class,
+        'match'             => MatchQuery::class,
+        'matchPhrase'       => MatchPhrase::class,
+        'matchPhrasePrefix' => MatchPhrasePrefix::class,
+        'wildcard'          => Wildcard::class,
+        'exists'            => Exists::class,
+        'ids'               => Ids::class,
+        'range'             => Range::class,
+        'bool'              => BoolQuery::class,
+        'hasParent'         => HasParent::class,
+        'hasChild'          => HasChild::class,
+        'functionScore'     => FunctionScore::class,
+        'nested'            => Nested::class,
+        'multiMatch'        => MultiMatch::class,
     ];
 
     public function __construct(Closure $closure)
