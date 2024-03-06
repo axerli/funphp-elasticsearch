@@ -53,6 +53,17 @@ class SearchRequest extends AbstractRequest
         return $this;
     }
 
+    /**
+     * @param array $body
+     */
+    public function searchByBody(array $body)
+    {
+        return $this->client->search([
+            'body'  => $body,
+            'index' => $this->index,
+        ]);
+    }
+
     public function search()
     {
         return $this->client->search($this->parser->parse($this));
