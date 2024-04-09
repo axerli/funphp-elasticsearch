@@ -15,7 +15,7 @@
     "require": {
         "php": ">=7.4",
         "elasticsearch/elasticsearch": "^7.8.0",
-        "laravel/framework": "^6.0"
+        "laravel/framework": ">=6.0"
     },
     "prefer-stable": true,
     "minimum-stability": "stable",
